@@ -1,0 +1,16 @@
+body {
+    background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.3), 
+      rgba(0, 0, 0, 0.3)
+    ),
+    url(https://d1csarkz8obe9u.cloudfront.net/posterpreviews/simple-white-wall-zoom-background-no-text-tem-design-template-10b5c85546a8683957b6ae525e8c87dc_screen.jpg?ts=1615661797);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
