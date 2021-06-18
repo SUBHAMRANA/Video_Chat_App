@@ -1,6 +1,7 @@
-import React from "react";
-import { createContext } from "react";
+import React,{createContext,useState,useRef,useEffect} from "react";
+
 import Peer from "simple-peer";
+import {io} from "socket.io-client";
 
 //socket for peer connection
 
@@ -27,7 +28,7 @@ const ContextProvider=({children})=>{
 
             myVideo.current.srcObject=currentStream;
         });
-         socket.on('me',(id)=>serMe(id));
+         socket.on('me',(id)=>setMe(id));
           socket.on('calluser',({from,name: callerName,signal})=>{
               setCall({isReceived:true,from,name:callerName,signal})
           });
