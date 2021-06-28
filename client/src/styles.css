@@ -1,10 +1,7 @@
 body {
     background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.3), 
-      rgba(0, 0, 0, 0.3)
-    ),
-    url(https://spng.pngfind.com/pngs/s/17-171560_square-border-cliparts-square-borders-png-transparent-png.png);
+    
+    url(https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

@@ -1,32 +1,140 @@
-// materialize css is used
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography,AppBar } from "@material-ui/core";
-const useStyles = makeStyles((theme)=>({
-        logo:{
-            height: '80px',
-            width: '80px',
-            align: 'left',
-            position: 'absolute',
-            up: '0px',
-            left: '0px',
-         
-        }
-     
+import React from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import Button from "@material-ui/core/Button";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { withRouter } from "react-router-dom";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  title: {
+    [theme.breakpoints.down("xs")]: {
+      flexGrow: 1
+    }
+  },
+  headerOptions: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "space-evenly"
+  }
 }));
-const Navbar=()=>{
-    const classes=useStyles();
-    return(
-        <nav className="nav-wrapper black darken-3">
-            <div className="container">
-                <a className="brand-logo"> <img className={classes.logo} src={"http://assets.stickpng.com/images/5e8cdf0a664eae000408545b.png"}/></a>
-                <ul className="right">
-                    <li><a href="/video_call">Video-Call</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
+
+const Navbar = props => {
+  const { history } = props;
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
+
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClick = pageURL => {
+    history.push(pageURL);
+    setAnchorEl(null);
+  };
+
+  const handleButtonClick = pageURL => {
+    history.push(pageURL);
+  };
+
+  const menuItems = [
+    {
+      menuTitle: "Home",
+      pageURL: "/"
+    },
+    {
+      menuTitle: "Contact",
+      pageURL: "/contact"
+    },
+    {
+      menuTitle: "About",
+      pageURL: "/about"
+    }
+  ];
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+          <img src="https://i.pinimg.com/originals/39/ba/6b/39ba6b4d789b41557ea5392427c2d486.png"  width="70" height="70"></img>
+          </Typography>
+          {isMobile ? (
+            <>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="menu"
+                onClick={handleMenu}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right"
+                }}
+                open={open}
+                onClose={() => setAnchorEl(null)}
+              >
+                {menuItems.map(menuItem => {
+                  const { menuTitle, pageURL } = menuItem;
+                  return (
+                    <MenuItem onClick={() => handleMenuClick(pageURL)}>
+                      {menuTitle}
+                    </MenuItem>
+                  );
+                })}
+              </Menu>
+            </>
+          ) : (
+            <div className={classes.headerOptions}>
+              <Button
+                variant="contained"
+                onClick={() => handleButtonClick("/")}
+              >
+                HOME
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleButtonClick("/contact")}
+              >
+                CONTACT
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => handleButtonClick("/about")}
+              >
+                ABOUT
+              </Button>
             </div>
-        </nav>
-    )
-}
-export default Navbar
+          )}
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
+
+export default withRouter(Navbar);

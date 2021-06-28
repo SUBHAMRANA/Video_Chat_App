@@ -8,20 +8,17 @@ import Contact from "./components/Contact";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 
-//used to basic app bar and all
-
  const App=()=>{
      return(
          <div>
          <BrowserRouter>
-         <div className="App">
+         
          <Navbar/>
-         <Route path='/video_call' component={Home}/>
+         <Route path='/' component={Home}/>
          <Route path="/about" component={About}/>
          <Route path="/contact" component={Contact}/>
-         </div>
          </BrowserRouter>
-         </div>
-     )
- }
+        </div>
+     );
+ };
  export default App;

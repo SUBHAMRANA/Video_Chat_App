@@ -24,12 +24,14 @@ io.on("connection",(socket)=>{
     socket.on("disconnect",()=>{
         socket.broadcast.emit("callended");//when call ended
     });
-
-    socket.on("calluser",({userToCall,signalData,from,name})=>{
-        io.to(userToCall).emit("calluser",{signal: signalData,from,name});
+    // console.log("yes");
+    // console.log(socket);
+    socket.on("callUser",({userToCall,signalData,from,name})=>{
+        console.log(userToCall,signalData,from,name);
+        io.to(userToCall).emit("callingUser",{signal: signalData,from,name});
     });//to call
-    socket.on("answercall",(data)=>{
-        io.to(data.to).emit("callaccepted",data.signal);
+    socket.on("answerCall",(data)=>{
+        io.to(data.to).emit("callAccepted",data.signal);
     });//to accept call
 });
 

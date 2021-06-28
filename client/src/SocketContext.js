@@ -7,7 +7,7 @@ import {io} from "socket.io-client";
 
 const SocketContext=createContext();
 //this is our local server
-const socket=io("https://Localhost:5000");
+const socket=io("http://localhost:5000");
 
 //this will provided all the services required in video call
 const ContextProvider=({children})=>{
@@ -29,9 +29,12 @@ const ContextProvider=({children})=>{
             myVideo.current.srcObject=currentStream;
         });
          socket.on('me',(id)=>setMe(id));
-          socket.on('calluser',({from,name: callerName,signal})=>{
-              setCall({isReceived:true,from,name:callerName,signal})
-          });
+         socket.on('callingUser',({signal,from,name})=>{
+            console.log("signal : ",signal);
+            console.log("from : ",from);
+            console.log("name : ",name);
+            setCall({isReceivingCall:true,from,name,signal})
+         });
         },[]);//empty array to break the call loop
 
 //response.
@@ -45,7 +48,7 @@ const answerCall=()=>{
     
     //call back function
     peer.on('signal',(data)=>{
-        socket.emit("answercall",{signal:data,to: call.from});
+        socket.emit("answerCall",{signal:data,to: call.from});
     })
 
     //it will control stream
@@ -63,23 +66,23 @@ const answerCall=()=>{
     const callUser=(id)=>{
         //it will perform some action when we call
        const peer=new Peer({initiator:true,trickle:false,stream});
-
+      // console.log("Call user",id)
        peer.on('signal',(data)=>{
-        socket.emit("calluser",{userToCall: id,signalData:data,from:me,name});
+        socket.emit("callUser",{userToCall: id,signalData:data,from:me,name});
     });
 
     //it will control stream
     peer.on("stream",(currentStream)=>{
         userVideo.current.srcObject=currentStream;
     });
-    socket.on('callaccepted',(signal)=>{
+    socket.on('callAccepted',(signal)=>{
         setCallAccepted(true);
 
         peer.signal(signal);
     });
     connectionRef.current = peer;
 
-    }
+    };
     
    //function when call is ended
 
@@ -93,7 +96,7 @@ const answerCall=()=>{
        //after we should reload the package
        window.location.reload();
 
-   }
+   };
    // to retun after the call is done
    return (
        //return everthing which is used
@@ -111,11 +114,11 @@ const answerCall=()=>{
         leaveCall,
         answerCall,
        }}>
-       {
-           children
-       }
+       
+          { children}
+       
        </SocketContext.Provider>
-   )
-}
+   );
+};
 export {ContextProvider,SocketContext};
 
