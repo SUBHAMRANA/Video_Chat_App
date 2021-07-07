@@ -19,7 +19,7 @@ const ContextProvider=({children})=>{
     const [name,setName]=useState("");
     const myVideo= useRef();
     const userVideo= useRef();
-    
+    var  currentPeer;
     const connectionRef=useRef();
     useEffect(()=>{
         navigator.mediaDevices.getUserMedia({video: true,audio: true})
@@ -34,6 +34,7 @@ const ContextProvider=({children})=>{
             console.log("from : ",from);
             console.log("name : ",name);
             setCall({isReceivingCall:true,from,name,signal})
+            currentPeer=call.peerConnection;
          });
         },[]);//empty array to break the call loop
 
@@ -74,6 +75,7 @@ const answerCall=()=>{
     //it will control stream
     peer.on("stream",(currentStream)=>{
         userVideo.current.srcObject=currentStream;
+        currentPeer=call.peerConnection;
     });
     socket.on('callAccepted',(signal)=>{
         setCallAccepted(true);
@@ -97,6 +99,48 @@ const answerCall=()=>{
        window.location.reload();
 
    };
+   const shareScreen=()=>{
+    navigator.mediaDevices.getDisplayMedia({
+        video:{
+            cursor: "always"
+        },
+        audio: {
+            echoCancellation : true,
+            noiceSuppresion: true
+        }
+    }).then((stream)=>{
+      let videoTrack=stream.getVideoTracks()[0];
+      let sender= currentPeer.getSenders().find(function(s){
+          return s.track.kind==videoTrack.kind
+      })
+      sender.replaceTrack(videoTrack)
+    }).catch((err)=>{
+        console.log("error"+ err);
+    })
+}
+
+
+
+  const VideoPause = () => {
+        const enabled = stream.getVideoTracks()[0].enabled;
+    if(enabled){
+        stream.getVideoTracks()[0].enabled=false;
+    }
+    else
+    {
+       stream.getVideoTracks()[0].enabled=true; 
+    }
+  };
+  const micoff = () => {
+    const enabled = stream.getAudioTracks()[0].enabled;
+    if(enabled){
+        stream.getAudioTracks()[0].enabled=false;
+    }
+    else
+    {
+       stream.getAudioTracks()[0].enabled=true; 
+    }
+  };
    // to retun after the call is done
    return (
        //return everthing which is used
@@ -113,6 +157,9 @@ const answerCall=()=>{
         callUser,
         leaveCall,
         answerCall,
+        VideoPause,
+        micoff,
+        shareScreen,
        }}>
        
           { children}

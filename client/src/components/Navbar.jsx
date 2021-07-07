@@ -57,7 +57,7 @@ const Navbar = props => {
       pageURL: "/"
     },
     {
-      menuTitle: "Contact",
+      menuTitle: "Chat",
       pageURL: "/contact"
     },
     {
@@ -121,7 +121,7 @@ const Navbar = props => {
                 variant="contained"
                 onClick={() => handleButtonClick("/contact")}
               >
-                CONTACT
+                Chat
               </Button>
               <Button
                 variant="contained"

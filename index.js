@@ -34,6 +34,12 @@ io.on("connection",(socket)=>{
         io.to(data.to).emit("callAccepted",data.signal);
     });//to accept call
 });
+//for message 
+io.on("connection",socket=>{
+    socket.on("message",({name,message})=>{
+        io.emit("message",{name,message})
+    })
+})
 
 server.listen(PORT, () => console.log("Server listening on Port " + PORT));
 

@@ -2,7 +2,7 @@ import React,{useContext,useState} from "react"
 import {Button,TextField,Grid,Typography,Container,Paper} from "@material-ui/core";
  import {makeStyles} from "@material-ui/core/styles";
  import {CopyToClipboard} from "react-copy-to-clipboard";
-import {Assignment,Phone,PhoneDisabled} from "@material-ui/icons";
+import {Assignment,Phone,PhoneDisabled,VideocamOff,VolumeMute,ScreenShare} from "@material-ui/icons";
     
 import {SocketContext} from "../SocketContext";
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
    //layout and logic
    const Options = ({ children }) => {
-    const { me, callAccepted, name, setName, callEnded, leaveCall, callUser } = useContext(SocketContext);
+    const { me, callAccepted, name, setName, callEnded, leaveCall, callUser,VideoPause,micoff,shareScreen } = useContext(SocketContext);
     const [idToCall, setIdToCall] = useState('');
     const classes = useStyles();
   
@@ -58,17 +58,36 @@ const useStyles = makeStyles((theme) => ({
                   <Button variant="contained" color="primary" fullWidth startIcon={<Assignment fontSize="large" />}>
                     Copy Your Call-ID
                   </Button>
-                </CopyToClipboard>
+                  </CopyToClipboard>
+                  <Button variant="contained" color="primary" startIcon={<VideocamOff fontSize="large" />} 
+                  fullWidth
+                  onClick={VideoPause} className={classes.margin}>
+                    video pause
+                  </Button>
+                  <Button variant="contained" color="primary" startIcon={<VolumeMute fontSize="large" />} 
+                  fullWidth
+                  onClick={micoff} className={classes.margin}>
+                    mute
+                  </Button>
+
+                
               </Grid>
               <Grid item xs={12} md={6} className={classes.padding}>
                 <Typography gutterBottom variant="h6">Make a call</Typography>
                 <TextField label="ID to call" value={idToCall} onChange={(e) => setIdToCall(e.target.value)} fullWidth />
                 {callAccepted && !callEnded ? (
+                  <div>
                   <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />} 
                   fullWidth 
                   onClick={leaveCall} className={classes.margin}>
                     Hang Up
                   </Button>
+                  <Button variant="contained" color="secondary" startIcon={<ScreenShare fontSize="large" />} 
+                  fullWidth 
+                  onClick={shareScreen} className={classes.margin}>
+                   shareScreen
+                  </Button>
+                  </div>
                 ) : (
                   
                   <Button variant="contained" color="primary" startIcon={<Phone fontSize="large" />} 
