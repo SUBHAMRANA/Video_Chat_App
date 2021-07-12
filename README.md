@@ -26,14 +26,23 @@ Frontend:
 How to use
 
 Video call
+
 1.Click on copy your id
+
 2.Share this id to the person whom with you want to connect
-3.Ask him to paste this in id to call column
-4.Click on call button
-5.you will receive notification like xyz is calling , accept it
-6.To hangup press on hangup button
+
+3.Ask him to paste this in id to call column.
+
+4.Click on call button.
+
+5.you will receive notification like xyz is calling , accept it.
+
+6.To hangup press on hangup button.
+
 7.Features like video pause mute and share screen are also availaible.
 
 Message
-write your name
-Simply send message
+
+write your name.
+
+Simply send message.
