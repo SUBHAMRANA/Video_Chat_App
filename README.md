@@ -20,3 +20,20 @@ Frontend:
 2.	Material UI icons: You can also use https://material-ui.com/components/material-icons/ to search for the icon you need.
 3.	Copy-To-Clipboard: To copy any text.
 4.	Simple-peer: PeerJS simplifies WebRTC peer-to-peer data, video, and audio calls. PeerJS wraps the browser's WebRTC implementation to provide a complete, configurable, and easy-to-use peer-to-peer connection API. Equipped with nothing but an ID, a peer can create a P2P data or media stream connection to a remote peer.
+5.	Frontend was deployed on netlify.
+
+
+How to use
+
+Video call
+1.Click on copy your id
+2.Share this id to the person whom with you want to connect
+3.Ask him to paste this in id to call column
+4.Click on call button
+5.you will receive notification like xyz is calling , accept it
+6.To hangup press on hangup button
+7.Features like video pause mute and share screen are also availaible.
+
+Message
+write your name
+Simply send message
